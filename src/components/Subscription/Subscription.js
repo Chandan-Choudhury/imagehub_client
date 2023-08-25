@@ -354,7 +354,7 @@ const Subscription = () => {
     <>
       <CssBaseline />
       <Navbar />
-      <Container maxWidth="sm">
+      <Container maxWidth="sm" sx={{ marginBottom: "100px" }}>
         <Card sx={{ margin: "100px 0px", border: "1px solid black" }}>
           <CardContent>
             <Typography variant="h4">Subscription</Typography>
