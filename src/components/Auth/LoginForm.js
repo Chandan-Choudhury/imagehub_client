@@ -13,6 +13,7 @@ import axios from "axios";
 import { useStore } from "../../store";
 import { useNavigate } from "react-router-dom";
 import config from "../../config";
+import Footer from "../UI/Footer";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -128,6 +129,7 @@ const LoginForm = () => {
           </Typography>
         </form>
       </Container>
+      <Footer />
     </>
   );
 };
