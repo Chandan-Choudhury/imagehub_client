@@ -66,7 +66,7 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <Container maxWidth="md">
+      <Container maxWidth="md" sx={{ marginBottom: "100px" }}>
         <Typography
           variant="h4"
           align="center"
