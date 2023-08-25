@@ -7,6 +7,7 @@ import {
   Typography,
   Alert,
   Snackbar,
+  CircularProgress,
 } from "@mui/material";
 import axios from "axios";
 import config from "../../config";
@@ -17,6 +18,7 @@ const SignUpForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const setToken = useStore((state) => state.setToken);
@@ -26,6 +28,7 @@ const SignUpForm = () => {
     console.log("signup process started");
     e.preventDefault();
     try {
+      setIsLoading(true);
       const response = await axios.post(
         `${config.API_URL}/signup`,
         {
@@ -50,6 +53,8 @@ const SignUpForm = () => {
       console.log("Catch block", err);
       setError(true);
       setErrorMessage(err?.response?.data?.message);
+    } finally {
+      setIsLoading(false);
     }
   };
   const handleClose = (event, reason) => {
@@ -111,8 +116,18 @@ const SignUpForm = () => {
             margin="normal"
             fullWidth
           />
-          <Button type="submit" variant="contained" color="primary">
-            Sign Up
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            disabled={isLoading}
+            sx={{ width: 120 }}
+          >
+            {isLoading ? (
+              <CircularProgress size={22} color="success" />
+            ) : (
+              "Sign Up"
+            )}
           </Button>
           <Typography variant="h6">
             Already have an account?{" "}

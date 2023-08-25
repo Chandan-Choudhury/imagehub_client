@@ -400,7 +400,7 @@ const Subscription = () => {
                       </Typography>
                     )}
                     {!isExistingCustomer && (
-                      <div>
+                      <>
                         <TextField
                           label="Name on Card"
                           value={name}
@@ -502,7 +502,7 @@ const Subscription = () => {
                             <CardCvcElement options={options} />
                           </div>
                         </div>
-                      </div>
+                      </>
                     )}
                     {subscriptionStatus === "active" &&
                     user.isSubscribed === false ? (

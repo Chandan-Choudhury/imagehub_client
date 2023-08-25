@@ -7,6 +7,7 @@ import {
   Typography,
   Alert,
   Snackbar,
+  CircularProgress,
 } from "@mui/material";
 import axios from "axios";
 import { useStore } from "../../store";
@@ -16,6 +17,7 @@ import config from "../../config";
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const setToken = useStore((state) => state.setToken);
@@ -25,6 +27,7 @@ const LoginForm = () => {
     e.preventDefault();
 
     try {
+      setIsLoading(true);
       const response = await axios.post(
         `${config.API_URL}/login`,
         JSON.stringify({ email, password }),
@@ -43,6 +46,8 @@ const LoginForm = () => {
       console.log("Catch block", err);
       setError(true);
       setErrorMessage(err?.response?.data?.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -101,8 +106,18 @@ const LoginForm = () => {
             margin="normal"
             fullWidth
           />
-          <Button type="submit" variant="contained" color="primary">
-            Log In
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            sx={{ width: 120 }}
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <CircularProgress size={22} color="success" />
+            ) : (
+              "Log In"
+            )}
           </Button>
           <Typography variant="h6">
             Don't have an account?{" "}
