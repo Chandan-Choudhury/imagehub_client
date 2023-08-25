@@ -3,6 +3,7 @@ import { Typography, Container, Paper } from "@mui/material";
 import ImageUpload from "../components/Image/ImageUpload";
 import ImageGrid from "../components/Image/ImageGrid";
 import Navbar from "../components/UI/Navbar";
+import Footer from "../components/UI/Footer";
 import axios from "axios";
 import moment from "moment";
 import config from "../config";
@@ -107,6 +108,7 @@ const Home = () => {
           <ImageGrid userId={userId} />
         </Paper>
       </Container>
+      <Footer />
     </>
   );
 };

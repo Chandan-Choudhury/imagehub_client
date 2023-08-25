@@ -24,6 +24,7 @@ import {
 import axios from "axios";
 import config from "../../config";
 import Navbar from "../UI/Navbar";
+import Footer from "../UI/Footer";
 import countries from "../Utils/CountryList";
 import moment from "moment";
 import Swal from "sweetalert2";
@@ -556,6 +557,7 @@ const Subscription = () => {
           </CardContent>
         </Card>
       </Container>
+      <Footer />
     </>
   );
 };
