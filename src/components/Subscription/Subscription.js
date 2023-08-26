@@ -150,12 +150,12 @@ const Subscription = () => {
     }
   };
 
-  const renewSubscription = async (e) => {
+  const resumeSubscription = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     try {
       const response = await axios.post(
-        `${config.API_URL}/renew-subscription/${userId}`,
+        `${config.API_URL}/resume-subscription/${userId}`,
         {},
         {
           headers: {
@@ -164,7 +164,7 @@ const Subscription = () => {
         }
       );
       Swal.fire({
-        title: "Subscription Renewed",
+        title: "Subscription Resumed",
         text: response.message,
         icon: "success",
         confirmButtonText: "OK",
@@ -371,7 +371,7 @@ const Subscription = () => {
                 user.isSubscribed === false ? (
                   <Typography variant="h6">
                     It's seems like you have cancelled the subscription, please
-                    renew to use the Pro benefits before current plan expired.
+                    resume the subscription to use the Pro benefits seamlessly.
                   </Typography>
                 ) : (
                   <Typography variant="h6">
@@ -511,12 +511,16 @@ const Subscription = () => {
                         variant="contained"
                         color="primary"
                         type="button"
-                        onClick={renewSubscription}
+                        onClick={resumeSubscription}
                         style={{ marginTop: "16px" }}
                         disabled={isLoading}
                         fullWidth
                       >
-                        {isLoading ? <CircularProgress size={24} /> : "Renew"}
+                        {isLoading ? (
+                          <CircularProgress size={24} />
+                        ) : (
+                          "Resume Subscription"
+                        )}
                       </Button>
                     ) : (
                       <Button
