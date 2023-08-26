@@ -308,7 +308,7 @@ const Subscription = () => {
 
     const calculateFormattedDuration = (timestamp) => {
       if (timestamp) {
-        const expiryDate = moment(timestamp, "YYYYMMDDHHmmssSSS");
+        const expiryDate = moment.utc(timestamp, "YYYYMMDDHHmmssSSS").local();
         const currentDate = moment();
         const duration = moment.duration(expiryDate.diff(currentDate));
 
