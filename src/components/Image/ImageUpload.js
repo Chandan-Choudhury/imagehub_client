@@ -86,7 +86,7 @@ const ImageUpload = () => {
       window.location.reload();
     } catch (error) {
       setError(true);
-      setErrorMessage("Error uploading images");
+      setErrorMessage(error.response.data.message);
     } finally {
       setIsLoading(false);
     }
