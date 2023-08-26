@@ -97,18 +97,11 @@ const Subscription = () => {
       );
 
       const confirmPayment = await stripe?.confirmCardPayment(
-        response.data.data.clientSecret,
-        console.log(
-          "resp.clientSecret from create sub :",
-          response.data.data.clientSecret
-        ),
+        response.data.data.subscription.latest_invoice.payment_intent
+          .client_secret,
         {
           payment_method: paymentMethod.paymentMethod?.id,
-        },
-        console.log(
-          "payment_method in confirm payment func :",
-          paymentMethod.paymentMethod?.id
-        )
+        }
       );
 
       if (confirmPayment?.error) {
@@ -123,10 +116,24 @@ const Subscription = () => {
           }
         });
       } else {
+        const updateDb = await axios.post(
+          `${config.API_URL}/update-subscription/${userId}`,
+          {
+            priceId: selectedPriceId,
+            customerId: response.data.data.subscription.customer,
+            subscriptionId: response.data.data.subscriptionId,
+          },
+          {
+            headers: {
+              Authorization: accessToken,
+            },
+          }
+        );
+        const icon = updateDb.data.icon;
         Swal.fire({
           title: "Payment Successful",
           text: "You have successfully subscribed to ImageHub Pro!",
-          icon: "success",
+          icon: icon,
           confirmButtonText: "OK",
         }).then((result) => {
           if (result.isConfirmed) {
@@ -417,13 +424,6 @@ const Subscription = () => {
                           margin="normal"
                         />
                         <TextField
-                          label="Postal Code"
-                          value={postalCode}
-                          onChange={(e) => setPostalCode(e.target.value)}
-                          required
-                          margin="normal"
-                        />
-                        <TextField
                           label="City"
                           value={city}
                           onChange={(e) => setCity(e.target.value)}
@@ -434,6 +434,13 @@ const Subscription = () => {
                           label="State"
                           value={state}
                           onChange={(e) => setState(e.target.value)}
+                          required
+                          margin="normal"
+                        />
+                        <TextField
+                          label="Postal Code"
+                          value={postalCode}
+                          onChange={(e) => setPostalCode(e.target.value)}
                           required
                           margin="normal"
                         />
