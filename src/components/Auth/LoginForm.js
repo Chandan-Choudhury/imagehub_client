@@ -10,6 +10,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import axios from "axios";
+import ReCAPTCHA from "react-google-recaptcha";
 import { useStore } from "../../store";
 import { useNavigate } from "react-router-dom";
 import config from "../../config";
@@ -18,6 +19,7 @@ import Footer from "../UI/Footer";
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [recaptchaValue, setRecaptchaValue] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -31,7 +33,7 @@ const LoginForm = () => {
       setIsLoading(true);
       const response = await axios.post(
         `${config.API_URL}/login`,
-        JSON.stringify({ email, password }),
+        JSON.stringify({ email, password, recaptchaValue }),
         {
           headers: { "Content-Type": "application/json" },
         }
@@ -57,6 +59,10 @@ const LoginForm = () => {
       return;
     }
     setError(false);
+  };
+
+  const handleRecaptchaChange = (value) => {
+    setRecaptchaValue(value);
   };
 
   return (
@@ -107,12 +113,16 @@ const LoginForm = () => {
             margin="normal"
             fullWidth
           />
+          <ReCAPTCHA
+            sitekey={config.RECAPTCHA_SITE_KEY}
+            onChange={handleRecaptchaChange}
+          />
           <Button
             type="submit"
             variant="contained"
             color="primary"
             sx={{ width: 120 }}
-            disabled={isLoading}
+            disabled={isLoading || !recaptchaValue}
           >
             {isLoading ? (
               <CircularProgress size={22} color="success" />

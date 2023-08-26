@@ -10,6 +10,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import axios from "axios";
+import ReCAPTCHA from "react-google-recaptcha";
 import config from "../../config";
 import { useStore } from "../../store";
 import { useNavigate } from "react-router-dom";
@@ -19,6 +20,7 @@ const SignUpForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [recaptchaValue, setRecaptchaValue] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -36,6 +38,7 @@ const SignUpForm = () => {
           name,
           email,
           password,
+          recaptchaValue,
         },
         {
           headers: {
@@ -58,11 +61,16 @@ const SignUpForm = () => {
       setIsLoading(false);
     }
   };
+
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
     setError(false);
+  };
+
+  const handleRecaptchaChange = (value) => {
+    setRecaptchaValue(value);
   };
 
   return (
@@ -117,11 +125,15 @@ const SignUpForm = () => {
             margin="normal"
             fullWidth
           />
+          <ReCAPTCHA
+            sitekey={config.RECAPTCHA_SITE_KEY}
+            onChange={handleRecaptchaChange}
+          />
           <Button
             type="submit"
             variant="contained"
             color="primary"
-            disabled={isLoading}
+            disabled={isLoading || !recaptchaValue}
             sx={{ width: 120 }}
           >
             {isLoading ? (
