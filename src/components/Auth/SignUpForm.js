@@ -78,6 +78,14 @@ const SignUpForm = () => {
       <CssBaseline />
       <Container maxWidth="xs">
         <Typography
+          variant="h6"
+          sx={{ textAlign: "center", marginTop: "100px", color: "red" }}
+        >
+          Register new user is not allowed currently.
+        </Typography>
+      </Container>
+      <Container maxWidth="xs">
+        <Typography
           variant="h4"
           sx={{ textAlign: "center", marginTop: "100px" }}
         >
