@@ -139,6 +139,24 @@ const LoginForm = () => {
           </Typography>
         </form>
       </Container>
+      <Container maxWidth="xs">
+        <Typography
+          variant="h6"
+          sx={{ textAlign: "center", marginTop: "100px" }}
+        >
+          Information
+        </Typography>
+        <Typography
+          variant="subtitle2"
+          sx={{ textAlign: "center" }}
+          gutterBottom
+        >
+          <b>To login with Demo account use:</b>
+          <br />
+          Email: johndoe@example.com
+          <br /> Password: Johndoe@123
+        </Typography>
+      </Container>
       <Footer />
     </>
   );
